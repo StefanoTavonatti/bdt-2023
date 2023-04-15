@@ -1,4 +1,4 @@
-# BdT2022 - Lab project
+# BdT2023 - Lab project
 
 This repository tracks the work performed during the University of Trento, Big Data Technologies - 2023 Lab lessons.
 
