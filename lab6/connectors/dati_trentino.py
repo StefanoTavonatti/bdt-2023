@@ -22,7 +22,11 @@ class DatiTrentinoConnector:
                     temp = f"{raw_measure_date} {hour}:00:00"
                     measure_date = datetime.fromisoformat(temp)
                     station.append_measure(Measure(
+                        pm25_value=raw_mesure["pm25"],
                         pm10_value=raw_mesure["pm10"],
+                        no2_value=raw_mesure["no2"],
+                        so2_value=raw_mesure["so2"],
+                        o3_value=raw_mesure["o3"],
                         dt=measure_date
                     ))
                 except:

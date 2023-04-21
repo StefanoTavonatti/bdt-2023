@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 
 class Station:
@@ -15,6 +15,23 @@ class Station:
 
         if self.name == "":
             raise Exception
+
+    def to_repr(self) -> dict:
+        return {
+            "address": self.address,
+            "city": self.city,
+            "name": self.name,
+            "measurements": [x.to_repr() for x in self.measurement]
+        }
+
+    @staticmethod
+    def from_repr(raw_data: dict) -> Station:
+        return Station(
+            name=raw_data["name"],
+            address=raw_data["address"],
+            city=raw_data["city"],
+            measurement=[Measure.from_repr(x) for x in raw_data["measurements"]]
+        )
 
     def append_measure(self, measure: Measure) -> None:
         self.measurement.append(measure)
@@ -31,9 +48,31 @@ class Station:
 
 @dataclasses.dataclass
 class Measure:
-
-    pm10_value: float
+    pm25_value:Optional[float]
+    no2_value: Optional[float]
+    o3_value: Optional[float]
+    so2_value: Optional[float]
+    pm10_value: Optional[float]
     dt: datetime
 
+    def to_repr(self) -> dict:
+        return {
+            "pm_10": self.pm10_value,
+            "pm25": self.pm25_value,
+            "no2": self.no2_value,
+            "o3": self.o3_value,
+            "so2": self.so2_value,
+            "dt": self.dt.isoformat()
+        }
 
+    @staticmethod
+    def from_repr(raw_data: dict) -> Measure:
+        return Measure(
+            pm10_value=raw_data["pm_10"],
+            pm25_value=raw_data["pm25"],
+            no2_value=raw_data["no2"],
+            o3_value=raw_data["o3"],
+            so2_value=raw_data["so2"],
+            dt=datetime.fromisoformat(raw_data["dt"])
+        )
 
