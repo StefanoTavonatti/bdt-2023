@@ -10,6 +10,7 @@ class DatiTrentinoConnector:
 
     def deserialize_station(self, raw_station: dict) -> Station:
         station = Station(
+            station_id=f"trento-{raw_station['nome']}",
             name=raw_station['nome'],
             city=raw_station['citta'],
             address=raw_station['indirizzo'],

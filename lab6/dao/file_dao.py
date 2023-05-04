@@ -1,11 +1,21 @@
 import json
 import os
+from typing import List
 
 from lab6.dao.common import BasicDao
 from lab6.data_model.station import Station
 
 
 class FileDao(BasicDao):
+
+    def update_station(self, station: Station) -> None:
+        pass
+
+    def get_station(self, station_id: int) -> Station:
+        pass
+
+    def get_station_by_name(self, name: str) -> List[Station]:
+        pass
 
     def __init__(self, db_file: str):
         self._db_file = db_file

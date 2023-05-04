@@ -7,7 +7,8 @@ from typing import List, Optional
 
 class Station:
 
-    def __init__(self, name: str, city: str, address: str, measurement: List[Measure]):
+    def __init__(self, station_id: str, name: str, city: str, address: str, measurement: List[Measure]):
+        self.station_id = station_id
         self.address = address
         self.city = city
         self.name = name

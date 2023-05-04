@@ -33,7 +33,7 @@ name = "station3"
 
 with conn:
     conn.execute("CREATE TABLE station("
-                "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                "ID CHAR(250) PRIMARY KEY,"
                 "name CHAR(250),"
                 "address CHAR(500),"
                 "city CHAR(500)"
@@ -45,7 +45,7 @@ with conn:
                  "pm10 REAL,"
                  "no2 REAL,"
                  "o3 REAL,"
-                 "so2 REAL"
+                 "so2 REAL,"
                  "dt DATETIME,"
-                 "station_id INTEGER,"
+                 "station_id CHAR(250),"
                  "FOREIGN KEY (station_id) REFERENCES station(ID))" )

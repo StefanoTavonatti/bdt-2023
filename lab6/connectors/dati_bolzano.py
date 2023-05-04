@@ -64,7 +64,7 @@ class DatiBolzanoConnector:
 
     def _deserialize_station(self, raw_measure: dict) -> Station:
         station_name = raw_measure["sname"]
-        station = Station(station_name, "", "", [])
+        station = Station(f"Bolzano-{station_name}", station_name, "", "", [])
 
         return station
 
