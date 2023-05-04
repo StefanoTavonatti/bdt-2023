@@ -54,7 +54,7 @@ class SQLiteDao(BasicDao):
     def get_measure(self, measure_id: str) -> Measure:
         with self._conn:
             cursor = self._conn.cursor()
-            cursor.execute("SELECT pm25, no2, o3, so2, pm10, dt, station_id, station_id FROM measure WHERE ID = ?", (measure_id,))
+            cursor.execute("SELECT pm25, no2, o3, so2, pm10, dt, station_id FROM measure WHERE ID = ?", (measure_id,))
 
             row = cursor.fetchone()
             if row is None:
@@ -66,7 +66,7 @@ class SQLiteDao(BasicDao):
         result = []
         with self._conn:
             cursor = self._conn.cursor()
-            cursor.execute("SELECT pm25, no2, o3, so2, pm10, dt, station_id, dt, station_id FROM measure WHERE station_id = ?", (station_id,))
+            cursor.execute("SELECT pm25, no2, o3, so2, pm10, dt, station_id FROM measure WHERE station_id = ?", (station_id,))
             for pm25_value, no2_value, o3_value, so2_value, pm10_value, dt, station_id in cursor:
                 result.append(Measure(pm25_value, no2_value, o3_value, so2_value, pm10_value, dt))
         return result
