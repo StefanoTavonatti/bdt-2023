@@ -1,36 +1,33 @@
 from datetime import datetime
+import time
 
+from lab6.cache.redis_cache import RedisCache
 from lab6.connectors.dati_trentino import DatiTrentinoConnector
 from lab6.connectors.dati_bolzano import DatiBolzanoConnector
 from lab6.dao.common import NotExist
 from lab6.dao.file_dao import FileDao
+from lab6.dao.pg_dao import PgDao
 from lab6.dao.sqlite_dao import SQLiteDao
+from lab6.manager import AirQualityManager
 
-connector = DatiTrentinoConnector()
+connector_trento = DatiTrentinoConnector()
+connector_bolzano =DatiBolzanoConnector()
 
-# dao = FileDao("my_db")
-#
-# data = connector.get_air_quality_data()
-#
-# print(data[0])
-# print(data[0].measurement)
-#
-connector=DatiBolzanoConnector()
-from_date=datetime(2023, 4, 20)
-to_date=datetime(2023, 4, 21)
-data = connector.get_air_quality_data(from_date, to_date)
 dao = SQLiteDao("lab6.db")
-# print(len(data))
-for station in data:
-    try:
-        stored_station = dao.get_station(station.station_id)
-        dao.update_station(station)
-    except NotExist:
-        dao.save_station(station)
 
-    for measure in station.measurement:
-        dao.save_measure(station.station_id, measure)
+cache = RedisCache("localhost", 6379, 0)
 
-# stations = dao.get_station_by_name("Parco S. Chiara")
-stations = dao.get_station("trento-Parco S. Chiara")
-print(stations)
+manager = AirQualityManager(
+    bolzano_connector=connector_bolzano,
+    trento_connector=connector_trento,
+    dao=dao,
+    cache=cache
+)
+
+
+if __name__ == "__main__":
+    while True:
+        print("start computation")
+        manager.start_computation()
+        print("sleep for 10 seconds")
+        time.sleep(10)

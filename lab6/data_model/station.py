@@ -19,6 +19,7 @@ class Station:
 
     def to_repr(self) -> dict:
         return {
+            "station_id": self.station_id,
             "address": self.address,
             "city": self.city,
             "name": self.name,
@@ -28,6 +29,7 @@ class Station:
     @staticmethod
     def from_repr(raw_data: dict) -> Station:
         return Station(
+            station_id=raw_data["station_id"],
             name=raw_data["name"],
             address=raw_data["address"],
             city=raw_data["city"],

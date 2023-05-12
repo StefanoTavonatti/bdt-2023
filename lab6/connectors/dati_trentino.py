@@ -3,10 +3,14 @@ from typing import List
 
 import requests
 
+from lab6.connectors.common import BasicConnector
 from lab6.data_model.station import Station, Measure
 
 
-class DatiTrentinoConnector:
+class DatiTrentinoConnector(BasicConnector):
+
+    def get_latest_air_quality_data(self):
+        return self.get_air_quality_data()
 
     def deserialize_station(self, raw_station: dict) -> Station:
         station = Station(
